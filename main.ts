@@ -172,34 +172,34 @@ class PathFinder {
         return true;
     }
 }
-class Enemy {
-    sprite: Sprite;
-    currentTarget: Sprite;
-    pathfinder: PathFinder;
-    constructor(column: number, row: number, tilemap: tiles.TileMapData) {
-        this.sprite = sprites.create(assets.image`enemyIMG`, SpriteKind.Enemy);
-        tiles.placeOnTile(this.sprite, tiles.getTileLocation(column, row))
-        this.currentTarget = sprites.create(assets.image`enemyTargetIMG`, SpriteKind.EnemyTarget);
-        tiles.placeOnTile(this.currentTarget, tiles.getTileLocation(column, row));
-        this.currentTarget.setFlag(SpriteFlag.Invisible, true);    // show hint
-        this.pathfinder = new PathFinder(tilemap);
-        this.sprite.follow(this.currentTarget);
-    }
-    updatePath(goal: Vector2) {
-        if (this.currentTarget.tilemapLocation().col != goal.x || this.currentTarget.tilemapLocation().row != goal.y) {
-            this.pathfinder.origin.position = new Vector2(this.currentTarget.tilemapLocation().col, this.currentTarget.tilemapLocation().row);
-            let path22 = this.pathfinder.findPath(goal);
-            let next2 = path22[path22.length - 1];
-            tiles.placeOnTile(this.currentTarget, tiles.getTileLocation(next2.x, next2.y));
-        }
-    }
-    pathFind(target: Sprite) {
-        if (Vector2.distance(new Vector2(this.sprite.x, this.sprite.y), new Vector2(this.currentTarget.x, this.currentTarget.y)) < 5) {
-            this.updatePath(new Vector2(target.tilemapLocation().col, target.tilemapLocation().row));
-        }
-    }
-    setRandomPosition() {
-        tiles.placeOnRandomTile(this.sprite, assets.tile`Background`);
-        this.currentTarget.setPosition(this.sprite.x, this.sprite.y);
-    }
-}
+// class Enemy {
+//     sprite: Sprite;
+//     currentTarget: Sprite;
+//     pathfinder: PathFinder;
+//     constructor(column: number, row: number, tilemap: tiles.TileMapData) {
+//         this.sprite = sprites.create(assets.image`enemyIMG`, SpriteKind.Enemy);
+//         tiles.placeOnTile(this.sprite, tiles.getTileLocation(column, row))
+//         this.currentTarget = sprites.create(assets.image`enemyTargetIMG`, SpriteKind.EnemyTarget);
+//         tiles.placeOnTile(this.currentTarget, tiles.getTileLocation(column, row));
+//         this.currentTarget.setFlag(SpriteFlag.Invisible, true);    // show hint
+//         this.pathfinder = new PathFinder(tilemap);
+//         this.sprite.follow(this.currentTarget);
+//     }
+//     updatePath(goal: Vector2) {
+//         if (this.currentTarget.tilemapLocation().col != goal.x || this.currentTarget.tilemapLocation().row != goal.y) {
+//             this.pathfinder.origin.position = new Vector2(this.currentTarget.tilemapLocation().col, this.currentTarget.tilemapLocation().row);
+//             let path22 = this.pathfinder.findPath(goal);
+//             let next2 = path22[path22.length - 1];
+//             tiles.placeOnTile(this.currentTarget, tiles.getTileLocation(next2.x, next2.y));
+//         }
+//     }
+//     pathFind(target: Sprite) {
+//         if (Vector2.distance(new Vector2(this.sprite.x, this.sprite.y), new Vector2(this.currentTarget.x, this.currentTarget.y)) < 5) {
+//             this.updatePath(new Vector2(target.tilemapLocation().col, target.tilemapLocation().row));
+//         }
+//     }
+//     setRandomPosition() {
+//         tiles.placeOnRandomTile(this.sprite, assets.tile`Background`);
+//         this.currentTarget.setPosition(this.sprite.x, this.sprite.y);
+//     }
+// }
