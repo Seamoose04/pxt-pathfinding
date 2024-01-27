@@ -13,7 +13,8 @@
         "tilemap.g.jres",
         "tilemap.g.ts",
         "images.g.jres",
-        "images.g.ts"
+        "images.g.ts",
+        "PathFinding.ts"
     ],
     "testFiles": [
         "test.ts"

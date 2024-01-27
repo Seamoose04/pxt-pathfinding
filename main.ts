@@ -60,15 +60,29 @@ class NodeList {
 }
 class PathFinder {
     origin: Node;
+    sprite: Sprite;
+    followTarget: Sprite;
 
     map: tiles.TileMapData;
     openList: NodeList;
     closedList: NodeList;
 
-    constructor(origin: Vector2, map: tiles.TileMapData) {
-        this.origin = new Node(origin, null);
+    constructor(map: tiles.TileMapData) {
         this.origin.G = 0;
         this.map = map;
+    }
+
+    attachSprite(sprite: Sprite) {
+        this.sprite = sprite;
+    }
+
+    updatePathfinding(target: Sprite) {
+        this.origin = new Node(new Vector2(this.sprite.x, this.sprite.y), null);
+        if (Vector2.distance(new Vector2(this.followTarget.x, this.followTarget.y), new Vector2(this.sprite.x, this.sprite.y)) < 5) {
+            let path = this.findPath(new Vector2(target.tilemapLocation().col, target.tilemapLocation().row));
+            let next = path[path.length-1];
+            this.followTarget.setPosition(next.x, next.y);
+        }
     }
 
     findPath(goal: Vector2) {
@@ -121,15 +135,15 @@ class PathFinder {
             }
             let node = this.closedList.containsPosition(goal);
             if (node != null) {
-                let path = [];
+                let path2 = [];
                 while (node.parent) {
                     if (showProcess) {
                         tiles.setTileAt(tiles.getTileLocation(node.position.x, node.position.y), assets.tile`BestPath`);
                     }
-                    path.push(node.position);
+                    path2.push(node.position);
                     node = node.parent;
                 }
-                return path;
+                return path2;
             }
         }
         return null;
@@ -168,15 +182,15 @@ class Enemy {
         this.currentTarget = sprites.create(assets.image`enemyTargetIMG`, SpriteKind.EnemyTarget);
         tiles.placeOnTile(this.currentTarget, tiles.getTileLocation(column, row));
         this.currentTarget.setFlag(SpriteFlag.Invisible, true);    // show hint
-        this.pathfinder = new PathFinder(new Vector2(column, row), tilemap);
+        this.pathfinder = new PathFinder(tilemap);
         this.sprite.follow(this.currentTarget);
     }
     updatePath(goal: Vector2) {
         if (this.currentTarget.tilemapLocation().col != goal.x || this.currentTarget.tilemapLocation().row != goal.y) {
             this.pathfinder.origin.position = new Vector2(this.currentTarget.tilemapLocation().col, this.currentTarget.tilemapLocation().row);
-            let path2 = this.pathfinder.findPath(goal);
-            let next = path2[path2.length - 1];
-            tiles.placeOnTile(this.currentTarget, tiles.getTileLocation(next.x, next.y));
+            let path22 = this.pathfinder.findPath(goal);
+            let next2 = path22[path22.length - 1];
+            tiles.placeOnTile(this.currentTarget, tiles.getTileLocation(next2.x, next2.y));
         }
     }
     pathFind(target: Sprite) {
