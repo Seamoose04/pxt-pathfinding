@@ -64,7 +64,6 @@ class PathFinder {
     closedList: NodeList;
 
     constructor(map: tiles.TileMapData) {
-        this.origin.G = 0;
         this.map = map;
     }
 
@@ -74,6 +73,7 @@ class PathFinder {
 
     updatePathfinding(target: Sprite) {
         this.origin = new Node(new Vector2(this.sprite.x, this.sprite.y), null);
+        this.origin.G = 0;
         if (Vector2.distance(new Vector2(this.followTarget.x, this.followTarget.y), new Vector2(this.sprite.x, this.sprite.y)) < 5) {
             let path = this.findPath(new Vector2(target.tilemapLocation().col, target.tilemapLocation().row));
             let next = path[path.length-1];
