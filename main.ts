@@ -85,13 +85,13 @@ class PathFinder {
         let showProcess = false;     //show Process
         let width = tileUtil.tilemapProperty(this.map, tileUtil.TilemapProperty.Columns);
         let height = tileUtil.tilemapProperty(this.map, tileUtil.TilemapProperty.Rows);
-        for (let x = 0; x < width; x++) {
-            for (let y = 0; y < height; y++) {
-                if (!this.map.isWall(x, y)) {
-                    tiles.setTileAt(tiles.getTileLocation(x, y), assets.tile`Background`);
-                }
-            }
-        }
+        // for (let x = 0; x < width; x++) {
+        //     for (let y = 0; y < height; y++) {
+                // if (!this.map.isWall(x, y)) {
+                    // tiles.setTileAt(tiles.getTileLocation(x, y), assets.tile`Background`);
+                // }
+        //     }
+        // }
         this.openList = new NodeList();
         this.closedList = new NodeList();
         this.openList.add(this.origin);
@@ -108,9 +108,9 @@ class PathFinder {
             }
             this.openList.removeElement(currentSquare);
             this.closedList.add(currentSquare);
-            if (showProcess) {
-                tiles.setTileAt(tiles.getTileLocation(currentSquare.position.x, currentSquare.position.y), assets.tile`Closed`);
-            }
+            // if (showProcess) {
+            //     tiles.setTileAt(tiles.getTileLocation(currentSquare.position.x, currentSquare.position.y), assets.tile`Closed`);
+            // }
             for (let k = 0; k < offsets.length; k++) {
                 let nodePos = new Vector2(currentSquare.position.x + offsets[k][0], currentSquare.position.y + offsets[k][1]);
                 let closed = this.closedList.containsPosition(nodePos);
@@ -123,9 +123,9 @@ class PathFinder {
                         }
                     } else {
                         this.openList.add(new Node(nodePos, currentSquare));
-                        if (showProcess) {
-                            tiles.setTileAt(tiles.getTileLocation(nodePos.x, nodePos.y), assets.tile`Open`);
-                        }
+                        // if (showProcess) {
+                        //     tiles.setTileAt(tiles.getTileLocation(nodePos.x, nodePos.y), assets.tile`Open`);
+                        // }
                     }
                 }
             }
@@ -133,9 +133,9 @@ class PathFinder {
             if (node != null) {
                 let path2 = [];
                 while (node.parent) {
-                    if (showProcess) {
-                        tiles.setTileAt(tiles.getTileLocation(node.position.x, node.position.y), assets.tile`BestPath`);
-                    }
+                    // if (showProcess) {
+                    //     tiles.setTileAt(tiles.getTileLocation(node.position.x, node.position.y), assets.tile`BestPath`);
+                    // }
                     path2.push(node.position);
                     node = node.parent;
                 }
