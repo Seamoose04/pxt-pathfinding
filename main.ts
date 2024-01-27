@@ -1,7 +1,3 @@
-namespace SpriteKind {
-    export const EnemyTarget = SpriteKind.create()
-    export const GoodGuy = SpriteKind.create()
-}
 class Vector2 {
     public x: number;
     public y: number;
