@@ -85,13 +85,6 @@ class PathFinder {
         let showProcess = false;     //show Process
         let width = tileUtil.tilemapProperty(this.map, tileUtil.TilemapProperty.Columns);
         let height = tileUtil.tilemapProperty(this.map, tileUtil.TilemapProperty.Rows);
-        // for (let x = 0; x < width; x++) {
-        //     for (let y = 0; y < height; y++) {
-                // if (!this.map.isWall(x, y)) {
-                    // tiles.setTileAt(tiles.getTileLocation(x, y), assets.tile`Background`);
-                // }
-        //     }
-        // }
         this.openList = new NodeList();
         this.closedList = new NodeList();
         this.openList.add(this.origin);
@@ -108,9 +101,6 @@ class PathFinder {
             }
             this.openList.removeElement(currentSquare);
             this.closedList.add(currentSquare);
-            // if (showProcess) {
-            //     tiles.setTileAt(tiles.getTileLocation(currentSquare.position.x, currentSquare.position.y), assets.tile`Closed`);
-            // }
             for (let k = 0; k < offsets.length; k++) {
                 let nodePos = new Vector2(currentSquare.position.x + offsets[k][0], currentSquare.position.y + offsets[k][1]);
                 let closed = this.closedList.containsPosition(nodePos);
@@ -123,9 +113,6 @@ class PathFinder {
                         }
                     } else {
                         this.openList.add(new Node(nodePos, currentSquare));
-                        // if (showProcess) {
-                        //     tiles.setTileAt(tiles.getTileLocation(nodePos.x, nodePos.y), assets.tile`Open`);
-                        // }
                     }
                 }
             }
@@ -133,9 +120,6 @@ class PathFinder {
             if (node != null) {
                 let path2 = [];
                 while (node.parent) {
-                    // if (showProcess) {
-                    //     tiles.setTileAt(tiles.getTileLocation(node.position.x, node.position.y), assets.tile`BestPath`);
-                    // }
                     path2.push(node.position);
                     node = node.parent;
                 }
@@ -168,34 +152,3 @@ class PathFinder {
         return true;
     }
 }
-// class Enemy {
-//     sprite: Sprite;
-//     currentTarget: Sprite;
-//     pathfinder: PathFinder;
-//     constructor(column: number, row: number, tilemap: tiles.TileMapData) {
-//         this.sprite = sprites.create(assets.image`enemyIMG`, SpriteKind.Enemy);
-//         tiles.placeOnTile(this.sprite, tiles.getTileLocation(column, row))
-//         this.currentTarget = sprites.create(assets.image`enemyTargetIMG`, SpriteKind.EnemyTarget);
-//         tiles.placeOnTile(this.currentTarget, tiles.getTileLocation(column, row));
-//         this.currentTarget.setFlag(SpriteFlag.Invisible, true);    // show hint
-//         this.pathfinder = new PathFinder(tilemap);
-//         this.sprite.follow(this.currentTarget);
-//     }
-//     updatePath(goal: Vector2) {
-//         if (this.currentTarget.tilemapLocation().col != goal.x || this.currentTarget.tilemapLocation().row != goal.y) {
-//             this.pathfinder.origin.position = new Vector2(this.currentTarget.tilemapLocation().col, this.currentTarget.tilemapLocation().row);
-//             let path22 = this.pathfinder.findPath(goal);
-//             let next2 = path22[path22.length - 1];
-//             tiles.placeOnTile(this.currentTarget, tiles.getTileLocation(next2.x, next2.y));
-//         }
-//     }
-//     pathFind(target: Sprite) {
-//         if (Vector2.distance(new Vector2(this.sprite.x, this.sprite.y), new Vector2(this.currentTarget.x, this.currentTarget.y)) < 5) {
-//             this.updatePath(new Vector2(target.tilemapLocation().col, target.tilemapLocation().row));
-//         }
-//     }
-//     setRandomPosition() {
-//         tiles.placeOnRandomTile(this.sprite, assets.tile`Background`);
-//         this.currentTarget.setPosition(this.sprite.x, this.sprite.y);
-//     }
-// }
